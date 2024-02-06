@@ -20,26 +20,44 @@ public class ApplePicker : MonoBehaviour
         for (int i = 0; i < numBaskets; i++)
         {
             GameObject tBasketGO = Instantiate<GameObject>(basketPrefab);
+            Collider basketCollider = tBasketGO.GetComponent<Collider>();
+
             Vector3 pos = Vector3.zero;
             pos.y = basketBottomY + (basketSpacingY * i);
             tBasketGO.transform.position = pos;
+
+            // Disable Colliders
+            basketCollider.enabled = false;
+
             basketList.Add(tBasketGO);
         }
 
+        EnableTopBasketCollision();
+
     }
 
-    public void AppleDestroyed()
+    private void EnableTopBasketCollision()
     {
+        basketList[basketList.Count - 1].GetComponent<Collider>().enabled = true;
+    }
+
+    // Called when an Apple goes off screen or when a Branch is collected
+    public void LifeLost()
+    {
+        // Remove all apples currently spawned
         GameObject[] tAppleArray = GameObject.FindGameObjectsWithTag("Apple");
         foreach (GameObject tGO in tAppleArray)
         {
             Destroy(tGO);
         }
 
+        // Lower basket count by 1
         int basketIndex = basketList.Count - 1;
         GameObject tBasketGO = basketList[basketIndex];
         basketList.RemoveAt(basketIndex);
         Destroy(tBasketGO);
+
+        EnableTopBasketCollision();
 
         if (basketList.Count == 0)
         {
