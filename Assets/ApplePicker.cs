@@ -57,11 +57,15 @@ public class ApplePicker : MonoBehaviour
         basketList.RemoveAt(basketIndex);
         Destroy(tBasketGO);
 
-        EnableTopBasketCollision();
-
         if (basketList.Count == 0)
         {
             SceneManager.LoadScene("_Scene_0");
         }
+        else
+        {
+            // Make sure we don't index out of bounds
+            EnableTopBasketCollision();
+        }
+
     }
 }
