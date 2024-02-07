@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 648089833294386467}
   - component: {fileID: -4341430471917479927}
   - component: {fileID: -5773336553815475273}
+  - component: {fileID: -2471677144693900303}
   m_Layer: 0
   m_Name: Branch
   m_TagString: Branch
@@ -65,6 +66,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 10
   m_CollisionDetection: 0
+--- !u!114 &-2471677144693900303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566383644393319614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8949f764746eb4cb1738cd785996a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2261851406241546594
 GameObject:
   m_ObjectHideFlags: 0
