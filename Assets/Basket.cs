@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,6 +9,8 @@ public class Basket : MonoBehaviour
 {
     [Header("Set Dynamically")]
     public TextMeshProUGUI scoreGT;
+
+    private bool collidedWithBranch = false;
 
     void Start()
     {
@@ -47,6 +50,16 @@ public class Basket : MonoBehaviour
         }
         else if (collidedWith.tag == "Branch")
         {
+            // For some reason, the branch was causing multiple OnCollisionEnter events so
+            // I added this workaround
+            if (collidedWithBranch)
+            {
+                return;
+            }
+
+            // Theres no need to set this back to false because this basket should be deleted soon
+            collidedWithBranch = true;
+            collidedWith.GetComponent<Collider>().enabled = false;
             Destroy(collidedWith);
 
             // TODO: Cause Game Over instead of lost life
