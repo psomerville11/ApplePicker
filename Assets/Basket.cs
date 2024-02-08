@@ -47,6 +47,9 @@ public class Basket : MonoBehaviour
             {
                 HighScore.score = score;
             }
+
+            ApplePicker ap = Camera.main.GetComponent<ApplePicker>();
+            ap.PlayAppleCollectSound();
         }
         else if (collidedWith.tag == "Branch")
         {
@@ -62,7 +65,6 @@ public class Basket : MonoBehaviour
             collidedWith.GetComponent<Collider>().enabled = false;
             Destroy(collidedWith);
 
-            // TODO: Cause Game Over instead of lost life
             ApplePicker ap = Camera.main.GetComponent<ApplePicker>();
             ap.LifeLost();
         }

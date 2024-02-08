@@ -17,6 +17,10 @@ public class ApplePicker : MonoBehaviour
     private List<GameObject> basketList;
     // Start is called before the first frame update
 
+    public AudioSource audioPlayer;
+    public AudioClip healthLostSound;
+    public AudioClip appleCollectSound;
+
     void Start()
     {
         basketList = new List<GameObject>();
@@ -44,6 +48,11 @@ public class ApplePicker : MonoBehaviour
         basketList[basketList.Count - 1].GetComponent<Collider>().enabled = true;
     }
 
+    public void PlayAppleCollectSound()
+    {
+        audioPlayer.PlayOneShot(appleCollectSound, .4f);
+    }
+
     // Called when an Apple goes off screen or when a Branch is collected
     public void LifeLost()
     {
@@ -62,6 +71,7 @@ public class ApplePicker : MonoBehaviour
         basketList.RemoveAt(basketIndex);
         Destroy(tBasketGO);
 
+
         if (basketList.Count == 0)
         {
             SceneManager.LoadScene("Game Over");
@@ -69,8 +79,9 @@ public class ApplePicker : MonoBehaviour
         else
         {
             roundCounter.GetComponent<TextMeshProUGUI>().text = "Round " + (numBaskets - (basketList.Count - 1));
-            // Make sure we don't index out of bounds
             EnableTopBasketCollision();
+            // Don't play when we reach 0 cause it gets cut off
+            audioPlayer.PlayOneShot(healthLostSound, .5f);
         }
 
     }
