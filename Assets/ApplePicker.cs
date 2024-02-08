@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +10,7 @@ public class ApplePicker : MonoBehaviour
 {
     [Header("Set in Inspector")]
     public GameObject basketPrefab;
+    public GameObject roundCounter;
     public int numBaskets = 3;
     public float basketBottomY = -14f;
     public float basketSpacingY = 2f;
@@ -45,8 +48,10 @@ public class ApplePicker : MonoBehaviour
     public void LifeLost()
     {
         // Remove all apples currently spawned
-        GameObject[] tAppleArray = GameObject.FindGameObjectsWithTag("Apple");
-        foreach (GameObject tGO in tAppleArray)
+        List<GameObject> removalArray = GameObject.FindGameObjectsWithTag("Apple").ToList();
+        // and all Branches currently spawned
+        removalArray.AddRange(GameObject.FindGameObjectsWithTag("Branch"));
+        foreach (GameObject tGO in removalArray)
         {
             Destroy(tGO);
         }
@@ -63,6 +68,7 @@ public class ApplePicker : MonoBehaviour
         }
         else
         {
+            roundCounter.GetComponent<TextMeshProUGUI>().text = "Round " + (numBaskets - (basketList.Count - 1));
             // Make sure we don't index out of bounds
             EnableTopBasketCollision();
         }
